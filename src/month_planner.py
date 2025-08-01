@@ -8,6 +8,7 @@ def generate_monthly_md(
     habit_names: List[str],
     target_month: str = "current",
 ) -> str:
+    """Generate a monthly markdown planner."""
     assert 0 <= num_habits <= 5, "You can track up to 5 habits."
 
     today = date.today()

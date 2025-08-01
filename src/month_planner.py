@@ -25,11 +25,18 @@ def generate_monthly_md(
     # Header
     month_name = calendar.month_name[month]
     output = [f"# Monthly Planner – {month_name} {year}\n"]
-    output.append(
-        f"**First day of the month:** {date(year, month, 1).strftime('%A, %B %d, %Y')}\n",
-    )
+    
+    # Goals section
+    output.append("\n## Main Goals of the Month\n")
+    output.append("- [ ] Goal 1")
+    output.append("- [ ] Goal 2")
+    output.append("- [ ] Goal 3")
+
+
 
     # Table header
+
+    output.append("\n## Day Highlights\n")
     headers = ["Day", "Weekday", "Highlight"] + habit_names
     output.append("| " + " | ".join(headers) + " |")
     output.append("|" + "|".join(["---"] * len(headers)) + "|")
@@ -42,10 +49,5 @@ def generate_monthly_md(
         row += ["[ ]" for _ in range(num_habits)]
         output.append("| " + " | ".join(row) + " |")
 
-    # Goals section
-    output.append("\n## Main Goals of the Month\n")
-    output.append("- [ ] Goal 1")
-    output.append("- [ ] Goal 2")
-    output.append("- [ ] Goal 3")
 
     return "\n".join(output)

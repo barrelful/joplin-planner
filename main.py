@@ -1,3 +1,5 @@
+# main.py
+from functools import wraps
 import os
 import sys
 from typing import Any
@@ -28,7 +30,7 @@ def validate_month(value: str) -> str:
     return value
 
 
-# Create a properly typed command decorator
+# Create a properly typed command decorator with workaround for MyPy
 def command(func: F) -> F:
     """Typed wrapper for Typer's command decorator."""
     return cast(F, app.command()(func))
@@ -63,6 +65,27 @@ def monthly(
     # Save the output to the specified file
     with open(output, "w", encoding="utf-8") as f:
         f.write(md_content)
+
+
+# Create a typed version of the callback decorator
+def typed_callback(*args: Any, **kwargs: Any) -> Callable[[F], F]:
+    def decorator(func: F) -> F:
+        @wraps(func)
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
+            return func(*args, **kwargs)
+
+        return cast(F, app.callback(*args, **kwargs)(wrapper))
+
+    return decorator
+
+
+@typed_callback(invoke_without_command=True)
+def main(ctx: typer.Context) -> None:
+    """Show help message if no command is provided."""
+    if ctx.invoked_subcommand is None:
+        print("Error: No planner type specified.")
+        print("Please specify a planner type (monthly, weekly, etc.)")
+        raise typer.Exit(code=1)
 
 
 if __name__ == "__main__":

@@ -40,14 +40,17 @@ Install all dependencies:
 Generate a markdown file for the **current** or **next** month with up to **5 habit columns**:
 
 ```bash
-joplin-planner monthly \
-  --habits "Workout" "Read" "Sleep Early" \
-  --month current \
-  --output planner.md
+joplin-planner monthly "Workout" "Read" "Sleep Early" --month current --output planner.md
+```
+
+Or run without any arguments to generate a default planner:
+
+```bash
+joplin-planner monthly
 ```
 
 #### Options:
-- `--habits` / `-h`: Up to 5 habit names
+- ~Habits:~ Specify 1 to 5 habit names as arguments (optional)
 - `--month` / `-m`: Either `current` (default) or `next`
 - `--output` / `-o`: File to save the generated markdown
 

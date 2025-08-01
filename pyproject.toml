@@ -1,0 +1,61 @@
+[project]
+name = "joplin-planner"
+version = "0.1.0"
+description = "Markdown generator for habit tracking and goal planning with Joplin"
+authors = [
+  { name = "barrelful", email = "unvaguely_lay@aleeas.com" }
+]
+license = { text = "GPL-3.0" }
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+
+dependencies = [
+  "click>=8.0,<9.0"
+]
+
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: End Users/Desktop",
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Utilities",
+  "Topic :: Office/Business :: Scheduling"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pre-commit",
+  "ruff",
+  "mypy"
+]
+
+[project.urls]
+Homepage = "https://github.com/barrelful/joplin-planner"
+Repository = "https://github.com/barrelful/joplin-planner"
+Documentation = "https://github.com/barrelful/joplin-planner#readme"
+Changelog = "https://github.com/barrelful/joplin-planner/releases"
+
+[project.scripts]
+joplin-planner = "main:cli"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/month_planner"]
+
+[tool.ruff]
+line-length = 100
+lint.ignore = ["E501"]
+lint.select = ["E", "F", "I"]
+lint.isort.force-single-line = true
+lint.isort.force-sort-within-sections = true
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+ignore_missing_imports = true

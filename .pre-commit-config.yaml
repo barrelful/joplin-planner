@@ -1,0 +1,67 @@
+repos:
+    - repo: https://github.com/astral-sh/uv-pre-commit
+      # uv version.
+      rev: 0.8.4
+      hooks:
+      - id: uv-lock
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v5.0.0
+      hooks:
+          - id: trailing-whitespace
+          - id: end-of-file-fixer
+          - id: check-docstring-first
+          - id: check-json
+          - id: check-yaml
+          - id: debug-statements
+          - id: requirements-txt-fixer
+          - id: check-ast
+          - id: check-builtin-literals
+          - id: check-byte-order-marker
+          - id: check-case-conflict
+          - id: check-executables-have-shebangs
+          - id: check-merge-conflict
+          - id: check-symlinks
+          - id: check-toml
+          - id: check-vcs-permalinks
+          - id: check-xml
+          - id: file-contents-sorter
+          - id: forbid-new-submodules
+          - id: mixed-line-ending
+          - id: pretty-format-json
+          - id: sort-simple-yaml
+
+    - repo: https://github.com/charliermarsh/ruff-pre-commit
+      rev: v0.12.4
+      hooks:
+          - id: ruff
+            args: [--fix]
+          - id: ruff-format
+
+    - repo: https://github.com/pre-commit/pre-commit
+      rev: v3.7.0
+      hooks:
+          - id: validate_manifest
+
+    - repo: https://github.com/asottile/pyupgrade
+      rev: v3.20.0
+      hooks:
+          - id: pyupgrade
+            args: [--py38-plus]
+
+    - repo: https://github.com/asottile/add-trailing-comma
+      rev: v3.2.0
+      hooks:
+          - id: add-trailing-comma
+
+    # - repo: https://github.com/pre-commit/mirrors-mypy
+    #   rev: v1.17.0
+    #   hooks:
+    #       - id: mypy
+    #         additional_dependencies:
+    #           - types-attrs
+    #           - numpy
+
+    - repo: https://github.com/jumanjihouse/pre-commit-hooks
+      rev: 3.0.0
+      hooks:
+          - id: shfmt

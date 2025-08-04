@@ -3,7 +3,7 @@ from datetime import date
 from typing import List
 
 
-def generate_monthly_md(
+def generate_monthly_planner(
     num_habits: int,
     habit_names: List[str],
     target_month: str = "current",
@@ -25,14 +25,12 @@ def generate_monthly_md(
     # Header
     month_name = calendar.month_name[month]
     output = [f"# Monthly Planner – {month_name} {year}\n"]
-    
+
     # Goals section
     output.append("\n## Main Goals of the Month\n")
     output.append("- [ ] Goal 1")
     output.append("- [ ] Goal 2")
     output.append("- [ ] Goal 3")
-
-
 
     # Table header
 
@@ -48,6 +46,5 @@ def generate_monthly_md(
         row = [f"{day:02}", weekday, ""]
         row += ["[ ]" for _ in range(num_habits)]
         output.append("| " + " | ".join(row) + " |")
-
 
     return "\n".join(output)

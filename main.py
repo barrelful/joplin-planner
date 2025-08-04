@@ -1,92 +1,88 @@
-# main.py
-from functools import wraps
+import argparse
 import os
 import sys
-from typing import Any
-from typing import Callable
-from typing import List
-from typing import Optional
-from typing import TypeVar
-from typing import cast
 
-import typer
-
-# Add the 'src' folder to the Python module search path
+# Adiciona a pasta 'src' no caminho de módulos
 sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
 
-# Import the function from the correct file
-from month_planner import generate_monthly_md
-
-app = typer.Typer()
-
-# Define a type variable for the command decorator
-F = TypeVar("F", bound=Callable[..., Any])
+from month_planner import generate_monthly_planner
+from src.week_planner import generate_weekly_planner
 
 
-def validate_month(value: str) -> str:
-    """Validate that month is either 'current' or 'next'."""
-    if value not in ["current", "next"]:
-        raise typer.BadParameter("Month must be either 'current' or 'next'")
-    return value
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Joplin Planner Generator. Use 'monthly' or 'weekly' subcommands.",
+    )
+    subparsers = parser.add_subparsers(dest="planner_type", required=True)
 
+    # Monthly planner arguments
+    month_parser = subparsers.add_parser("monthly", help="Generate a monthly planner")
+    month_parser.add_argument(
+        "--habits",
+        type=str,
+        nargs="*",
+        default=[],
+        help="List of habit names (max 5)",
+    )
+    month_parser.add_argument(
+        "--next",
+        action="store_true",
+        help="Generate for next month instead of current month",
+    )
 
-# Create a properly typed command decorator with workaround for MyPy
-def command(func: F) -> F:
-    """Typed wrapper for Typer's command decorator."""
-    return cast(F, app.command()(func))
+    # Weekly planner arguments
+    week_parser = subparsers.add_parser("weekly", help="Generate a weekly planner")
+    week_parser.add_argument(
+        "--start",
+        type=int,
+        default=8,
+        help="Start hour of the day (0-23), e.g., 8 for 08:00",
+    )
+    week_parser.add_argument(
+        "--end",
+        type=int,
+        default=22,
+        help="End hour of the day (1-24), e.g., 22 for 22:00",
+    )
+    week_parser.add_argument(
+        "--interval",
+        type=int,
+        choices=[1, 2],
+        default=2,
+        help="Interval between time blocks: 1 for hourly, 2 for every 2 hours",
+    )
+    week_parser.add_argument(
+        "--format",
+        choices=["12h", "24h"],
+        default="24h",
+        help="Hour format: 12h (e.g., 08:00 AM) or 24h (e.g., 08:00)",
+    )
+    week_parser.add_argument(
+        "--next",
+        action="store_true",
+        help="Generate for next week instead of current week",
+    )
 
+    args = parser.parse_args()
 
-@command
-def monthly(
-    habits: Optional[List[str]] = typer.Argument(None, help="Names of habits to track (max 5)."),
-    month: str = typer.Option(
-        "current",
-        help="Choose current or next month.",
-        callback=validate_month,
-    ),
-    output: str = typer.Option("monthly_planner.md", help="Output markdown file."),
-) -> None:
-    """
-    🗓️ Generate a monthly planner.
+    if args.planner_type == "monthly":
+        habit_names = args.habits[:5]
+        md = generate_monthly_planner(
+            num_habits=len(habit_names),
+            habit_names=habit_names,
+            target_month="next" if args.next else "current",
+        )
+    elif args.planner_type == "weekly":
+        md = generate_weekly_planner(
+            time_start=args.start,
+            time_end=args.end,
+            hour_format=args.format,
+            interval_hours=args.interval,
+            next_week=args.next,
+        )
 
-    Example:
-        $ python main.py monthly Meditate Duolingo Workout Diet --month next --output next_month.md
-    """
-    if habits is None:
-        habits = []
-
-    # Validate number of habits
-    if len(habits) > 5:
-        raise ValueError("You can track up to 5 habits.")
-
-    # Call the generate_monthly_md function with the correct parameters
-    md_content = generate_monthly_md(len(habits), habits, month)
-
-    # Save the output to the specified file
-    with open(output, "w", encoding="utf-8") as f:
-        f.write(md_content)
-
-
-# Create a typed version of the callback decorator
-def typed_callback(*args: Any, **kwargs: Any) -> Callable[[F], F]:
-    def decorator(func: F) -> F:
-        @wraps(func)
-        def wrapper(*args: Any, **kwargs: Any) -> Any:
-            return func(*args, **kwargs)
-
-        return cast(F, app.callback(*args, **kwargs)(wrapper))
-
-    return decorator
-
-
-@typed_callback(invoke_without_command=True)
-def main(ctx: typer.Context) -> None:
-    """Show help message if no command is provided."""
-    if ctx.invoked_subcommand is None:
-        print("Error: No planner type specified.")
-        print("Please specify a planner type (monthly, weekly, etc.)")
-        raise typer.Exit(code=1)
+    print(md)
 
 
 if __name__ == "__main__":
-    app()
+    main()

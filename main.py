@@ -6,7 +6,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
 
 from month_planner import generate_monthly_planner
-from src.week_planner import generate_weekly_planner
+from week_planner import generate_weekly_planner
 
 
 def main() -> None:

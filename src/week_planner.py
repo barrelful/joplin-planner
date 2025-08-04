@@ -43,6 +43,7 @@ Week brief summary and goal
     weekday_names = [d.strftime("%A") for d in days]
     table = "## Weak planner\n\n"
     table += "|     | " + " | ".join(day_headers) + " |\n"
+    table += "| --- |" + " --- |" * len(day_headers) + "\n"
     table += "| --- | " + " | ".join(weekday_names) + " |\n"
 
     # Time slots

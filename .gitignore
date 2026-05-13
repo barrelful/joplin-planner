@@ -22,3 +22,7 @@ monthly_planner.md
 build/
 dist/
 *.egg-info/
+
+# Opencode
+.sisyphus/
+.opencode/

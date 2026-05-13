@@ -41,7 +41,7 @@ Week brief summary and goal
     # Table header
     day_headers = [d.strftime("%d/%m") for d in days]
     weekday_names = [d.strftime("%A") for d in days]
-    table = "## Weak planner\n\n"
+    table = "## Weekly planner\n\n"
     table += "|     | " + " | ".join(day_headers) + " |\n"
     table += "| --- |" + " --- |" * len(day_headers) + "\n"
     table += "| --- | " + " | ".join(weekday_names) + " |\n"

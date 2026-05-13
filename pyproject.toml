@@ -36,7 +36,7 @@ Documentation = "https://github.com/barrelful/joplin-planner#readme"
 Changelog = "https://github.com/barrelful/joplin-planner/releases"
 
 [project.scripts]
-joplin-planner = "main:cli"
+joplin-planner = "main:main"
 
 [build-system]
 requires = ["hatchling"]

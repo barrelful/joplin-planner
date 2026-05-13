@@ -24,9 +24,8 @@ def generate_weekly_planner(
     days = [monday + timedelta(days=i) for i in range(7)]
 
     # Header
-    start_str = days[0].strftime("%d")
-    end_str = days[-1].strftime("%dth of %B %Y")
-    header = f"# 🗓️ Weekly Planner – {start_str} to {end_str}\n\n"
+    iso = days[0].isocalendar()
+    header = f"# 🗓️ Weekly Schedule – {iso.year}-W{iso.week:02d}\n\n"
 
     # Objectives section
     objectives = """## Overview and main objective
@@ -58,4 +57,20 @@ Week brief summary and goal
 
         table += f"| {time_label} | " + " | ".join(["" for _ in range(7)]) + " |\n"
 
-    return header + objectives + table
+    review = """
+## End-of-week review
+
+### What worked?
+
+-
+
+### What broke?
+
+-
+
+### What should change next week?
+
+-
+"""
+
+    return header + objectives + table + review

@@ -1,0 +1,21 @@
+{
+  "monthly_planner": {
+    "2026-05": {
+      "note_id": "may-note-id",
+      "fields": {
+        "Hydrate": "checkbox",
+        "Move": "checkbox",
+        "Read": "checkbox",
+        "Deep Work": "checkbox",
+        "Steps": "number"
+      }
+    },
+    "2026-06": {
+      "note_id": "june-note-id",
+      "fields": {
+        "Meditate": "checkbox",
+        "Sleep Score": "number"
+      }
+    }
+  }
+}

@@ -26,7 +26,8 @@ classifiers = [
 dev = [
   "pre-commit",
   "ruff",
-  "mypy"
+  "mypy",
+  "pytest"
 ]
 
 [project.urls]

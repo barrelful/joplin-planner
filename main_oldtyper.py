@@ -33,7 +33,7 @@ def validate_month(value: str) -> str:
 # Create a properly typed command decorator with workaround for MyPy
 def command(func: F) -> F:
     """Typed wrapper for Typer's command decorator."""
-    return cast(F, app.command()(func))
+    return app.command()(func)
 
 
 @command

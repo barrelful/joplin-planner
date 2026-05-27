@@ -13,8 +13,8 @@ from urllib.error import HTTPError
 from urllib.error import URLError
 from urllib.parse import quote
 from urllib.parse import urlencode
+import urllib.request
 from urllib.request import Request
-from urllib.request import urlopen
 
 
 @dataclass(frozen=True)
@@ -87,9 +87,7 @@ def load_joplin_credentials(config_dir: Path) -> tuple[str, str]:
                 joplin_token = value
 
     if joplin_base_url is None:
-        print(
-            f"Error: JOPLIN_BASE_URL not set in {config_file}.", file=sys.stderr
-        )
+        print(f"Error: JOPLIN_BASE_URL not set in {config_file}.", file=sys.stderr)
         sys.exit(1)
 
     if joplin_token is None:
@@ -118,7 +116,7 @@ def joplin_get_note(base_url: str, token: str, note_id: str) -> dict[str, object
     request = Request(url, method="GET")
 
     try:
-        response = cast(HTTPResponse, urlopen(request))  # noqa: S310 - local Joplin URL
+        response = cast(HTTPResponse, urllib.request.urlopen(request))  # noqa: S310 - local Joplin URL
         with closing(response):
             response_body = response.read().decode("utf-8")
         loaded = cast(object, json.loads(response_body))
@@ -153,7 +151,7 @@ def joplin_put_note(base_url: str, token: str, note_id: str, body: str) -> None:
     )
 
     try:
-        response = cast(HTTPResponse, urlopen(request))  # noqa: S310 - local Joplin URL
+        response = cast(HTTPResponse, urllib.request.urlopen(request))  # noqa: S310 - local Joplin URL
         with closing(response):
             _ = response.read()
     except HTTPError as exc:
@@ -181,9 +179,7 @@ def load_planner_state(config_dir: Path) -> dict[str, object]:
     state_file = config_dir / "planner-state.json"
 
     if not state_file.exists():
-        print(
-            f"Error: planner-state.json not found at {state_file}.", file=sys.stderr
-        )
+        print(f"Error: planner-state.json not found at {state_file}.", file=sys.stderr)
         sys.exit(1)
 
     try:
@@ -225,7 +221,9 @@ def get_month_config(state: dict[str, object], month_key: str) -> dict[str, obje
     month_config = monthly_planner_config.get(month_key)
 
     if not isinstance(month_config, dict):
-        print(f"Error: No configuration found for {month_key} in planner-state.json.", file=sys.stderr)
+        print(
+            f"Error: No configuration found for {month_key} in planner-state.json.", file=sys.stderr
+        )
         sys.exit(1)
     month_config_values = cast(dict[str, object], month_config)
 
@@ -399,7 +397,9 @@ def update_row_cells(
 
     for field_name, value in updates.items():
         if field_name not in column_indexes:
-            print(f"Error: Field '{field_name}' is not present in the tracker table.", file=sys.stderr)
+            print(
+                f"Error: Field '{field_name}' is not present in the tracker table.", file=sys.stderr
+            )
             sys.exit(1)
 
         field_type = field_types[field_name]

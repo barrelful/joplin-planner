@@ -306,6 +306,67 @@ def find_day_row(rows: list[TableRow], day: int) -> TableRow:
     sys.exit(1)
 
 
+def update_row_cells(
+    row: TableRow,
+    header: list[str],
+    updates: dict[str, bool | int],
+    field_types: dict[str, str],
+    note: str | None,
+) -> str:
+    """Apply field updates to a monthly tracker table row."""
+    if len(header) == 1 and "|" in header[0]:
+        header_cells = parse_table_cells(header[0])
+    else:
+        header_cells = header
+
+    column_indexes = {cell.strip(): index for index, cell in enumerate(header_cells)}
+    cells = row.cells.copy()
+
+    for field_name, value in updates.items():
+        if field_name not in column_indexes:
+            print(f"Error: Field '{field_name}' is not present in the tracker table.", file=sys.stderr)
+            sys.exit(1)
+
+        field_type = field_types[field_name]
+        column_index = column_indexes[field_name]
+
+        if field_type == "checkbox":
+            cells[column_index] = "[x]" if value else "[ ]"
+        elif field_type == "number":
+            cells[column_index] = str(value)
+        else:
+            print(
+                f"Error: Unknown field type '{field_type}' for field '{field_name}'.",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+    if note is not None:
+        cells[2] = note
+
+    return "| " + " | ".join(cells) + " |"
+
+
+def rebuild_body(parsed: TableParsed, updated_row_index: int, updated_row_text: str) -> str:
+    """Rebuild a note body with one tracker table row replaced."""
+    lines = parsed.preamble + [parsed.header_line, parsed.separator_line]
+
+    for index, row in enumerate(parsed.rows):
+        if index == updated_row_index:
+            if row.original_line.endswith("\r\n"):
+                line_ending = "\r\n"
+            elif row.original_line.endswith("\n"):
+                line_ending = "\n"
+            else:
+                line_ending = ""
+            lines.append(updated_row_text + line_ending)
+        else:
+            lines.append(row.original_line)
+
+    lines.extend(parsed.postamble)
+    return "".join(lines)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Update a monthly day entry in Joplin.",
@@ -382,15 +443,27 @@ def main() -> None:
         body = body_file.read_text(encoding="utf-8")
         parsed_table = parse_monthly_table(body, note_id)
         day_row = find_day_row(parsed_table.rows, parsed_date.day)
+        updated_row_index = parsed_table.rows.index(day_row)
+        updated_row_text = update_row_cells(
+            day_row,
+            [parsed_table.header_line],
+            typed_fields,
+            schema,
+            note,
+        )
+        updated_body = rebuild_body(parsed_table, updated_row_index, updated_row_text)
+        _ = sys.stdout.write(updated_body)
+        return
     else:
         parsed_table = None
         day_row = None
+        updated_body = None
 
     message_template = (
         "Business logic not yet implemented. "
         + "Parsed args: date=%s, month_key=%s, fields=%s, note=%s, "
         + "config_dir=%s, dry_run=%s, joplin_base_url=%s, month_config=%s, "
-        + "parsed_table=%s, day_row=%s"
+        + "parsed_table=%s, day_row=%s, updated_body=%s"
     )
     message = message_template % (
         date,
@@ -403,6 +476,7 @@ def main() -> None:
         month_config,
         parsed_table,
         day_row,
+        updated_body,
     )
     raise NotImplementedError(message)
 

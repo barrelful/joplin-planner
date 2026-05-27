@@ -1,12 +1,20 @@
 from __future__ import annotations
 
 import argparse
+from contextlib import closing
 from dataclasses import dataclass
 from datetime import datetime
+from http.client import HTTPResponse
 import json
 from pathlib import Path
 import sys
 from typing import cast
+from urllib.error import HTTPError
+from urllib.error import URLError
+from urllib.parse import quote
+from urllib.parse import urlencode
+from urllib.request import Request
+from urllib.request import urlopen
 
 
 @dataclass(frozen=True)
@@ -89,6 +97,73 @@ def load_joplin_credentials(config_dir: Path) -> tuple[str, str]:
         sys.exit(1)
 
     return (joplin_base_url, joplin_token)
+
+
+def sanitize_error_message(message: str, token: str) -> str:
+    """Redact the Joplin token from user-visible errors."""
+    if token == "":
+        return message
+    return message.replace(token, "<redacted>")
+
+
+def joplin_note_url(base_url: str, token: str, note_id: str) -> str:
+    """Build the Joplin note endpoint URL with token and required fields."""
+    query = urlencode({"token": token, "fields": "id,body,title"})
+    return f"{base_url.rstrip('/')}/notes/{quote(note_id)}?{query}"
+
+
+def joplin_get_note(base_url: str, token: str, note_id: str) -> dict[str, object]:
+    """Fetch a single Joplin note by ID."""
+    url = joplin_note_url(base_url, token, note_id)
+    request = Request(url, method="GET")
+
+    try:
+        response = cast(HTTPResponse, urlopen(request))  # noqa: S310 - local Joplin URL
+        with closing(response):
+            response_body = response.read().decode("utf-8")
+        loaded = cast(object, json.loads(response_body))
+    except HTTPError as exc:
+        message = f"Error: Joplin GET failed with HTTP {exc.code}: {exc.reason}"
+        print(sanitize_error_message(message, token), file=sys.stderr)
+        sys.exit(2)
+    except URLError as exc:
+        message = f"Error: Joplin GET failed: {exc.reason}"
+        print(sanitize_error_message(message, token), file=sys.stderr)
+        sys.exit(2)
+    except json.JSONDecodeError:
+        print("Error: Joplin GET returned invalid JSON.", file=sys.stderr)
+        sys.exit(2)
+
+    if not isinstance(loaded, dict):
+        print("Error: Joplin GET returned a non-object response.", file=sys.stderr)
+        sys.exit(2)
+
+    return cast(dict[str, object], loaded)
+
+
+def joplin_put_note(base_url: str, token: str, note_id: str, body: str) -> None:
+    """Update a single Joplin note body by ID."""
+    url = joplin_note_url(base_url, token, note_id)
+    payload = json.dumps({"body": body}).encode("utf-8")
+    request = Request(
+        url,
+        data=payload,
+        headers={"Content-Type": "application/json"},
+        method="PUT",
+    )
+
+    try:
+        response = cast(HTTPResponse, urlopen(request))  # noqa: S310 - local Joplin URL
+        with closing(response):
+            _ = response.read()
+    except HTTPError as exc:
+        message = f"Error: Joplin PUT failed with HTTP {exc.code}: {exc.reason}"
+        print(sanitize_error_message(message, token), file=sys.stderr)
+        sys.exit(2)
+    except URLError as exc:
+        message = f"Error: Joplin PUT failed: {exc.reason}"
+        print(sanitize_error_message(message, token), file=sys.stderr)
+        sys.exit(2)
 
 
 def load_planner_state(config_dir: Path) -> dict[str, object]:
@@ -435,50 +510,46 @@ def main() -> None:
     schema = cast(dict[str, str], month_config["fields"])
     typed_fields = validate_fields(fields, schema)
 
-    # Load credentials after state validation
-    joplin_base_url, _joplin_token = load_joplin_credentials(config_dir)
     note_id = cast(str, month_config["note_id"])
+    joplin_base_url = ""
+    joplin_token = ""
 
     if body_file is not None:
         body = body_file.read_text(encoding="utf-8")
-        parsed_table = parse_monthly_table(body, note_id)
-        day_row = find_day_row(parsed_table.rows, parsed_date.day)
-        updated_row_index = parsed_table.rows.index(day_row)
-        updated_row_text = update_row_cells(
-            day_row,
-            [parsed_table.header_line],
-            typed_fields,
-            schema,
-            note,
-        )
-        updated_body = rebuild_body(parsed_table, updated_row_index, updated_row_text)
+    else:
+        # Load credentials after state validation.
+        joplin_base_url, joplin_token = load_joplin_credentials(config_dir)
+        joplin_note = joplin_get_note(joplin_base_url, joplin_token, note_id)
+        note_body = joplin_note.get("body")
+
+        if not isinstance(note_body, str):
+            print("Error: Joplin note response is missing a string body.", file=sys.stderr)
+            sys.exit(2)
+
+        body = note_body
+
+    parsed_table = parse_monthly_table(body, note_id)
+    day_row = find_day_row(parsed_table.rows, parsed_date.day)
+    updated_row_index = parsed_table.rows.index(day_row)
+    updated_row_text = update_row_cells(
+        day_row,
+        parsed_table.header_cells,
+        typed_fields,
+        schema,
+        note,
+    )
+    updated_body = rebuild_body(parsed_table, updated_row_index, updated_row_text)
+
+    if body_file is not None:
         _ = sys.stdout.write(updated_body)
         return
-    else:
-        parsed_table = None
-        day_row = None
-        updated_body = None
 
-    message_template = (
-        "Business logic not yet implemented. "
-        + "Parsed args: date=%s, month_key=%s, fields=%s, note=%s, "
-        + "config_dir=%s, dry_run=%s, joplin_base_url=%s, month_config=%s, "
-        + "parsed_table=%s, day_row=%s, updated_body=%s"
-    )
-    message = message_template % (
-        date,
-        month_key,
-        typed_fields,
-        note,
-        config_dir,
-        dry_run,
-        joplin_base_url,
-        month_config,
-        parsed_table,
-        day_row,
-        updated_body,
-    )
-    raise NotImplementedError(message)
+    if dry_run:
+        _ = sys.stdout.write(updated_body)
+        return
+
+    joplin_put_note(joplin_base_url, joplin_token, note_id, updated_body)
+    print(f"Updated day {parsed_date.day:02d} in monthly planner for {month_key}.")
 
 
 if __name__ == "__main__":

@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import sys
 from typing import Any
+from typing import cast
 
 
 def month_key_from_date(date_str: str) -> str:
@@ -152,6 +153,66 @@ def parse_field_arg(arg: str) -> tuple[str, str]:
     return (name, raw_value)
 
 
+def coerce_checkbox(raw: str, field_name: str = "<unknown>") -> bool:
+    normalized = raw.lower()
+
+    if normalized == "true":
+        return True
+    if normalized == "false":
+        return False
+
+    print(
+        f"Error: Field '{field_name}' expects true/false, got '{raw}'.",
+        file=sys.stderr,
+    )
+    sys.exit(1)
+
+
+def coerce_number(raw: str, field_name: str = "<unknown>") -> int:
+    if raw.isdigit():
+        return int(raw)
+
+    print(
+        f"Error: Field '{field_name}' expects a non-negative integer, got '{raw}'.",
+        file=sys.stderr,
+    )
+    sys.exit(1)
+
+
+def validate_fields(
+    field_args: list[tuple[str, str]], schema: dict[str, str]
+) -> dict[str, bool | int]:
+    unknown_fields = [name for name, _raw_value in field_args if name not in schema]
+
+    if unknown_fields:
+        unknown_list = ", ".join(unknown_fields)
+        valid_fields = ", ".join(schema.keys())
+        print(
+            f"Error: Unknown field(s): {unknown_list}. Valid fields: {valid_fields}.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    typed_fields: dict[str, bool | int] = {}
+
+    for name, raw_value in field_args:
+        field_type = schema[name]
+
+        if field_type == "checkbox":
+            typed_fields[name] = coerce_checkbox(raw_value, name)
+        elif field_type == "number":
+            typed_fields[name] = coerce_number(raw_value, name)
+        else:
+            print(
+                f"Error: Unknown field type '{field_type}' for field '{name}'. "
+                "Supported types: checkbox, number.",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+    return typed_fields
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Update a monthly day entry in Joplin.",
@@ -205,6 +266,8 @@ def main() -> None:
 
     # Get month configuration
     month_config = get_month_config(state, month_key)
+    schema = cast(dict[str, str], month_config["fields"])
+    typed_fields = validate_fields(fields, schema)
 
     # Load credentials after state validation
     joplin_base_url, joplin_token = load_joplin_credentials(config_dir)
@@ -213,7 +276,16 @@ def main() -> None:
         "Business logic not yet implemented. "
         "Parsed args: date=%s, month_key=%s, fields=%s, note=%s, config_dir=%s, dry_run=%s, "
         "joplin_base_url=%s, month_config=%s"
-        % (args.date, month_key, fields, args.note, config_dir, args.dry_run, joplin_base_url, month_config)
+        % (
+            args.date,
+            month_key,
+            typed_fields,
+            args.note,
+            config_dir,
+            args.dry_run,
+            joplin_base_url,
+            month_config,
+        )
     )
 
 

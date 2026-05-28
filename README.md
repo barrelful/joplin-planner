@@ -182,39 +182,45 @@ Week brief summary and goal
 
 ### Daily Snippet
 ```markdown
-# 📋 Daily Planner – Tuesday, 2 June 2026
+# Daily Plan - 2026-03-14
 
-## Today's Date
-Tuesday, 2 June 2026
+> Saturday, 14 March 2026
+> Fun dates: Pi Day — Celebrating the mathematical constant π (3.14159...); Pie Day — Enjoy your favorite pie today!
+> Mercury note: Do the next right thing.
 
-## Fun Dates
-- World Sex Worker Day. Recognise the rights and contributions of sex workers worldwide.
+## Main objective
+*
 
-## Planning Note
-Focus on what matters most to you and do that one thing well.
+## Top priorities
+* [ ]
+* [ ]
+* [ ]
 
-## Holiday
-- Spring Bank Holiday (England and Wales)
+## Schedule / constraints
+*
 
-## Main Objective
-One thing to accomplish today:
+## Must do
+* [ ]
 
-## Top Priorities
-- [ ] Priority 1
-- [ ] Priority 2
-- [ ] Priority 3
+## Should do
+* [ ]
 
-## Schedule
-| Time         | Task |
-| ------------ | ---- |
-| 08:00 - 10:00 |      |
-| 10:00 - 12:00 |      |
-| 12:00 - 14:00 |      |
-| 14:00 - 16:00 |      |
-| 16:00 - 18:00 |      |
-| 18:00 - 20:00 |      |
+## Nice to do
+* [ ]
+
+## Health / maintenance
+* [ ]
+
+## Carryover
+* [ ]
 
 ## Notes
+*
+
+## Evening close-out
+* Done:
+* Still open:
+* First action tomorrow:
 ```
 
 Ready to paste into your Joplin note!

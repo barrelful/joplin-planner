@@ -13,7 +13,7 @@ class FunDate(TypedDict):
 
 def load_fun_dates(path: Path | None = None) -> dict[str, list[FunDate]]:
     """Load fun-date data keyed by MM-DD."""
-    data_path = path or Path(__file__).resolve().parent.parent / "data" / "fun_dates.json"
+    data_path = path or Path(__file__).resolve().parent / "data" / "fun_dates.json"
 
     try:
         with data_path.open(encoding="utf-8") as file:
@@ -37,7 +37,7 @@ def load_holidays(
     region: str = "england-and-wales",
 ) -> dict[str, str]:
     """Load holiday data keyed by YYYY-MM-DD."""
-    data_path = path or Path(__file__).resolve().parent.parent / "data" / f"holidays_{region}.json"
+    data_path = path or Path(__file__).resolve().parent / "data" / f"holidays_{region}.json"
 
     try:
         with data_path.open(encoding="utf-8") as file:

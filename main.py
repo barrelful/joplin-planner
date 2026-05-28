@@ -1,12 +1,17 @@
+# pyright: reportAny=false, reportUnknownArgumentType=false, reportUnknownVariableType=false, reportUnusedCallResult=false
 import argparse
+from datetime import date
+from datetime import datetime
+from datetime import timedelta
 import os
 import sys
 
 # Adiciona a pasta 'src' no caminho de módulos
 sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
 
-from month_planner import generate_monthly_planner
-from week_planner import generate_weekly_planner
+from day_planner import generate_daily_planner  # pyright: ignore[reportMissingImports]
+from month_planner import generate_monthly_planner  # pyright: ignore[reportMissingImports]
+from week_planner import generate_weekly_planner  # pyright: ignore[reportMissingImports]
 
 
 def main() -> None:
@@ -63,6 +68,45 @@ def main() -> None:
         help="Generate for next week instead of current week",
     )
 
+    # Daily planner arguments
+    day_parser = subparsers.add_parser("daily", help="Generate a daily planner")
+    day_parser.add_argument(
+        "--date",
+        type=str,
+        help="Date to generate for in YYYY-MM-DD format",
+    )
+    day_parser.add_argument(
+        "--today",
+        action="store_true",
+        help="Generate for today",
+    )
+    day_parser.add_argument(
+        "--tomorrow",
+        action="store_true",
+        help="Generate for tomorrow",
+    )
+    day_parser.add_argument(
+        "--fun-dates",
+        type=str,
+        help="Path to fun dates JSON file",
+    )
+    day_parser.add_argument(
+        "--holiday-region",
+        type=str,
+        default="england-and-wales",
+        help="Holiday region to use",
+    )
+    day_parser.add_argument(
+        "--no-holidays",
+        action="store_true",
+        help="Do not include holidays",
+    )
+    day_parser.add_argument(
+        "--no-fun-dates",
+        action="store_true",
+        help="Do not include fun dates",
+    )
+
     args = parser.parse_args()
 
     if args.planner_type == "monthly":
@@ -80,6 +124,29 @@ def main() -> None:
             interval_hours=args.interval,
             next_week=args.next,
         )
+    elif args.planner_type == "daily":
+        from pathlib import Path
+
+        if args.date:
+            try:
+                target_date = datetime.strptime(args.date, "%Y-%m-%d").date()
+            except ValueError:
+                print("Invalid date format. Use YYYY-MM-DD.", file=sys.stderr)
+                sys.exit(1)
+        elif args.tomorrow:
+            target_date = date.today() + timedelta(days=1)
+        else:
+            target_date = date.today()
+
+        md = generate_daily_planner(
+            date=target_date,
+            fun_dates_path=Path(args.fun_dates) if args.fun_dates else None,
+            holiday_region=args.holiday_region,
+            include_holidays=not args.no_holidays,
+            include_fun_dates=not args.no_fun_dates,
+        )
+    else:
+        raise ValueError(f"Unsupported planner type: {args.planner_type}")
 
     print(md)
 

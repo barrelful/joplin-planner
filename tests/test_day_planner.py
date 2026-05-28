@@ -1,8 +1,13 @@
 from datetime import date
+from datetime import timedelta
 from pathlib import Path
+import sys
+from unittest.mock import patch
 
+import pytest
 from pytest import CaptureFixture
 
+from main import main
 from src.day_planner import FunDate
 from src.day_planner import format_daily_header
 from src.day_planner import generate_daily_planner
@@ -238,3 +243,89 @@ def test_generated_planner_has_top_priority_checkboxes() -> None:
     planner = generate_daily_planner(date(2026, 6, 2), fun_dates_override={}, holidays_override={})
 
     assert planner.count("* [ ]") >= 8
+
+
+def test_cli_date_flag(capsys: CaptureFixture[str]) -> None:
+    with patch.object(sys, "argv", ["main.py", "daily", "--date", "2026-06-02"]):
+        main()
+
+    captured = capsys.readouterr()
+    assert "# Daily Plan - 2026-06-02" in captured.out
+
+
+def test_cli_today_flag(capsys: CaptureFixture[str]) -> None:
+    today = date.today()
+
+    with patch.object(sys, "argv", ["main.py", "daily", "--today"]):
+        main()
+
+    captured = capsys.readouterr()
+    assert f"# Daily Plan - {today.isoformat()}" in captured.out
+
+
+def test_cli_tomorrow_flag(capsys: CaptureFixture[str]) -> None:
+    tomorrow = date.today() + timedelta(days=1)
+
+    with patch.object(sys, "argv", ["main.py", "daily", "--tomorrow"]):
+        main()
+
+    captured = capsys.readouterr()
+    assert f"# Daily Plan - {tomorrow.isoformat()}" in captured.out
+
+
+def test_cli_default_date(capsys: CaptureFixture[str]) -> None:
+    today = date.today()
+
+    with patch.object(sys, "argv", ["main.py", "daily"]):
+        main()
+
+    captured = capsys.readouterr()
+    assert f"# Daily Plan - {today.isoformat()}" in captured.out
+
+
+def test_cli_invalid_date() -> None:
+    with patch.object(sys, "argv", ["main.py", "daily", "--date", "not-a-date"]):
+        with pytest.raises(SystemExit) as exc_info:
+            main()
+
+    assert exc_info.value.code == 1
+
+
+def test_cli_no_holidays(capsys: CaptureFixture[str]) -> None:
+    with patch.object(
+        sys,
+        "argv",
+        ["main.py", "daily", "--no-holidays", "--date", "2026-12-25"],
+    ):
+        main()
+
+    captured = capsys.readouterr()
+    assert "## Holiday" not in captured.out
+
+
+def test_cli_no_fun_dates(capsys: CaptureFixture[str]) -> None:
+    with patch.object(
+        sys,
+        "argv",
+        ["main.py", "daily", "--no-fun-dates", "--date", "2026-03-14"],
+    ):
+        main()
+
+    captured = capsys.readouterr()
+    assert "Fun date:" not in captured.out
+
+
+def test_cli_existing_monthly_still_works(capsys: CaptureFixture[str]) -> None:
+    with patch.object(sys, "argv", ["main.py", "monthly", "--habits", "Test"]):
+        main()
+
+    captured = capsys.readouterr()
+    assert "# Monthly Planner" in captured.out
+
+
+def test_cli_existing_weekly_still_works(capsys: CaptureFixture[str]) -> None:
+    with patch.object(sys, "argv", ["main.py", "weekly"]):
+        main()
+
+    captured = capsys.readouterr()
+    assert "# 🗓️ Weekly Schedule" in captured.out

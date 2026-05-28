@@ -1,78 +1,764 @@
 {
+  "01-01": [
+    {
+      "name": "New Year's Day",
+      "note": "A fresh start for planners and dreamers alike."
+    }
+  ],
+  "01-03": [
+    {
+      "name": "J.R.R. Tolkien Day",
+      "note": "Celebrate the professor who gave us Middle-earth."
+    }
+  ],
+  "01-05": [
+    {
+      "name": "National Bird Day",
+      "note": "Watch the skies—feathered friends are about."
+    }
+  ],
+  "01-09": [
+    {
+      "name": "Static Electricity Day",
+      "note": "A shocking good excuse to touch doorknobs carefully."
+    }
+  ],
+  "01-10": [
+    {
+      "name": "Houseplant Appreciation Day",
+      "note": "Your leafy roommates deserve some attention."
+    }
+  ],
+  "01-13": [
+    {
+      "name": "Rubber Duck Day",
+      "note": "A small yellow hero of bathtubs everywhere."
+    }
+  ],
+  "01-15": [
+    {
+      "name": "Bagel Day",
+      "note": "Round, hole-y, and delicious."
+    }
+  ],
   "01-18": [
     {
       "name": "Winnie the Pooh Day",
-      "note": "Celebrating the beloved bear created by A.A. Milne"
+      "note": "Celebrating the bear of very little brain and lots of heart."
     }
   ],
   "01-20": [
     {
       "name": "Penguin Awareness Day",
-      "note": "Highlighting the importance of penguin conservation"
+      "note": "Tuxedo-wearing birds deserve their spotlight."
+    }
+  ],
+  "01-21": [
+    {
+      "name": "Squirrel Appreciation Day",
+      "note": "Nature's tiny acrobats are gathering winter stores."
+    }
+  ],
+  "01-25": [
+    {
+      "name": "Opposite Day",
+      "note": "Yes means no and up means down—go with it."
+    }
+  ],
+  "01-27": [
+    {
+      "name": "Chocolate Cake Day",
+      "note": "Sometimes dessert is the main event."
+    }
+  ],
+  "01-28": [
+    {
+      "name": "Data Privacy Day",
+      "note": "Read those terms of service—seriously."
+    }
+  ],
+  "01-29": [
+    {
+      "name": "National Puzzle Day",
+      "note": "Crosswords, jigsaws, or brain teasers—solve something."
+    }
+  ],
+  "01-31": [
+    {
+      "name": "Inspire Your Heart with Art Day",
+      "note": "Make something or visit something beautiful."
+    }
+  ],
+  "02-02": [
+    {
+      "name": "Groundhog Day",
+      "note": "Six more weeks of winter—or spring? Ask the rodent."
+    }
+  ],
+  "02-07": [
+    {
+      "name": "Send a Card to a Friend Day",
+      "note": "Paper mail is a rare and lovely thing."
+    }
+  ],
+  "02-09": [
+    {
+      "name": "Pizza Day",
+      "note": "The triangle that unites us all."
+    }
+  ],
+  "02-12": [
+    {
+      "name": "Darwin Day",
+      "note": "Celebrate the man who explained where we came from."
+    }
+  ],
+  "02-14": [
+    {
+      "name": "Valentine's Day",
+      "note": "Love is in the air—or at least chocolate is."
+    }
+  ],
+  "02-17": [
+    {
+      "name": "Random Acts of Kindness Day",
+      "note": "Surprise someone with unexpected goodness."
+    }
+  ],
+  "02-20": [
+    {
+      "name": "Love Your Pet Day",
+      "note": "Extra cuddles for your furry, feathery, or scaly friend."
+    }
+  ],
+  "02-27": [
+    {
+      "name": "Polar Bear Day",
+      "note": "White giants of the Arctic deserve respect."
+    }
+  ],
+  "03-03": [
+    {
+      "name": "World Wildlife Day",
+      "note": "Our planet's creatures need champions."
+    }
+  ],
+  "03-05": [
+    {
+      "name": "National Pancake Day",
+      "note": "Stack 'em high and pour the syrup."
+    }
+  ],
+  "03-08": [
+    {
+      "name": "International Women's Day",
+      "note": "Celebrate the women who shape your world."
+    }
+  ],
+  "03-10": [
+    {
+      "name": "Mario Day",
+      "note": "It's-a me—a gaming icon."
     }
   ],
   "03-14": [
     {
       "name": "Pi Day",
-      "note": "Celebrating the mathematical constant π (3.14159...)"
-    },
+      "note": "A good excuse for maths, pie, or both."
+    }
+  ],
+  "03-17": [
     {
-      "name": "Pie Day",
-      "note": "Enjoy your favorite pie today!"
+      "name": "St. Patrick's Day",
+      "note": "Wear green, drink green, be slightly Irish."
+    }
+  ],
+  "03-20": [
+    {
+      "name": "International Day of Happiness",
+      "note": "Pursue joy—it's a worthy quest."
+    }
+  ],
+  "03-21": [
+    {
+      "name": "World Poetry Day",
+      "note": "Read, write, or recite something verse-worthy."
+    }
+  ],
+  "03-22": [
+    {
+      "name": "World Water Day",
+      "note": "H2O is worth its weight in gold."
+    }
+  ],
+  "03-25": [
+    {
+      "name": "Tolkien Reading Day",
+      "note": "One ring to read them all."
+    }
+  ],
+  "03-27": [
+    {
+      "name": "World Theatre Day",
+      "note": "Applause for the stage."
+    }
+  ],
+  "03-31": [
+    {
+      "name": "World Backup Day",
+      "note": "Save your work—do it now."
+    }
+  ],
+  "04-01": [
+    {
+      "name": "April Fools' Day",
+      "note": "Prank responsibly—or don't."
+    }
+  ],
+  "04-02": [
+    {
+      "name": "World Party Day",
+      "note": "Any excuse to celebrate works."
+    }
+  ],
+  "04-04": [
+    {
+      "name": "National Deep Dish Pizza Day",
+      "note": "Chicago's gift to the pizza debate."
+    }
+  ],
+  "04-09": [
+    {
+      "name": "Name Yourself Day",
+      "note": "You could be anything today."
+    }
+  ],
+  "04-10": [
+    {
+      "name": "Siblings Day",
+      "note": "The people who made you who you are."
+    }
+  ],
+  "04-12": [
+    {
+      "name": "Cosmonautics Day",
+      "note": "Yuri Gagarin orbited first—salute the feat."
+    }
+  ],
+  "04-14": [
+    {
+      "name": "Dolphin Day",
+      "note": "Smart, social, and smiling."
+    }
+  ],
+  "04-17": [
+    {
+      "name": "Haiku Day",
+      "note": "Seventeen syllables of brevity."
+    }
+  ],
+  "04-22": [
+    {
+      "name": "Earth Day",
+      "note": "A good day to step outside."
+    }
+  ],
+  "04-23": [
+    {
+      "name": "World Book Day",
+      "note": "Shakespeare was born and died today—read something."
+    }
+  ],
+  "04-26": [
+    {
+      "name": "Alien Day",
+      "note": "LV-426—we know the reference."
+    }
+  ],
+  "04-28": [
+    {
+      "name": "Superhero Day",
+      "note": "Capes are optional—courage isn't."
+    }
+  ],
+  "05-01": [
+    {
+      "name": "May Day",
+      "note": "Spring is in full swing—dance around a maypole."
     }
   ],
   "05-04": [
     {
       "name": "Star Wars Day",
-      "note": "May the Fourth be with you! - celebrate the galaxy far, far away"
+      "note": "May the Fourth be with your task list."
+    }
+  ],
+  "05-05": [
+    {
+      "name": "Cartoonists Day",
+      "note": "Draw something silly—it helps."
+    }
+  ],
+  "05-10": [
+    {
+      "name": "Eat What You Want Day",
+      "note": "Diet starts tomorrow—maybe."
+    }
+  ],
+  "05-15": [
+    {
+      "name": "Chocolate Chip Cookie Day",
+      "note": "Milk's best friend."
+    }
+  ],
+  "05-16": [
+    {
+      "name": "Love a Tree Day",
+      "note": "Hug one—you'll feel better."
+    }
+  ],
+  "05-19": [
+    {
+      "name": "World Bee Day",
+      "note": "Pollinators deserve appreciation."
+    }
+  ],
+  "05-23": [
+    {
+      "name": "World Turtle Day",
+      "note": "Slow and steady wins the day."
+    }
+  ],
+  "05-25": [
+    {
+      "name": "Towel Day",
+      "note": "Don't panic—bring a towel."
+    }
+  ],
+  "05-28": [
+    {
+      "name": "Hamburger Day",
+      "note": "Patty, bun, and endless toppings."
+    }
+  ],
+  "06-03": [
+    {
+      "name": "World Bicycle Day",
+      "note": "Two wheels, zero emissions."
+    }
+  ],
+  "06-04": [
+    {
+      "name": "National Cheese Day",
+      "note": "From cheddar to brie—the world is your cheeseboard."
+    }
+  ],
+  "06-05": [
+    {
+      "name": "World Environment Day",
+      "note": "Small actions ripple far."
+    }
+  ],
+  "06-08": [
+    {
+      "name": "World Oceans Day",
+      "note": "Covering most of the planet—respect the blue."
+    }
+  ],
+  "06-12": [
+    {
+      "name": "Superman Day",
+      "note": "The man of steel lives."
+    }
+  ],
+  "06-16": [
+    {
+      "name": "Fresh Veggies Day",
+      "note": "Eat the rainbow—naturally."
+    }
+  ],
+  "06-18": [
+    {
+      "name": "International Picnic Day",
+      "note": "Spread a blanket—feast outdoors."
+    }
+  ],
+  "06-21": [
+    {
+      "name": "First Day of Summer",
+      "note": "Sunshine, warmth, and long evenings."
+    }
+  ],
+  "06-24": [
+    {
+      "name": "World UFO Day",
+      "note": "Look up—the sky is vast."
+    }
+  ],
+  "06-28": [
+    {
+      "name": "Tau Day",
+      "note": "2π is better—math nerds unite."
+    }
+  ],
+  "06-29": [
+    {
+      "name": "Camera Day",
+      "note": "Capture the moment—frame life."
+    }
+  ],
+  "07-04": [
+    {
+      "name": "Sidewalk Egg Frying Day",
+      "note": "It's too hot to cook—physics is fun."
+    }
+  ],
+  "07-07": [
+    {
+      "name": "World Chocolate Day",
+      "note": "Dark, milk, or white—celebrate cocoa."
+    }
+  ],
+  "07-10": [
+    {
+      "name": "Pina Colada Day",
+      "note": "Coconut, pineapple, and vacation vibes."
+    }
+  ],
+  "07-13": [
+    {
+      "name": "Embrace Your Geekness Day",
+      "note": "Proudly nerdy—own it."
     }
   ],
   "07-17": [
     {
       "name": "World Emoji Day",
-      "note": "Celebrating the universal language of emojis"
+      "note": "The universal language of text."
+    }
+  ],
+  "07-20": [
+    {
+      "name": "Space Exploration Day",
+      "note": "Dreaming of stars since Apollo 11."
+    }
+  ],
+  "07-22": [
+    {
+      "name": "Hammock Day",
+      "note": "Sway gently—do nothing."
+    }
+  ],
+  "07-24": [
+    {
+      "name": "Tequila Day",
+      "note": "Salted lime and shots—party time."
+    }
+  ],
+  "07-30": [
+    {
+      "name": "International Day of Friendship",
+      "note": "Friends make life worthwhile."
+    }
+  ],
+  "07-31": [
+    {
+      "name": "Harry Potter's Birthday",
+      "note": "The boy who lived turns older."
+    }
+  ],
+  "08-02": [
+    {
+      "name": "National Ice Cream Sandwich Day",
+      "note": "Frozen treat between cookies."
+    }
+  ],
+  "08-03": [
+    {
+      "name": "National Watermelon Day",
+      "note": "Sweet, refreshing, seed-spitting fun."
     }
   ],
   "08-08": [
     {
       "name": "International Cat Day",
-      "note": "A day to appreciate our feline friends"
+      "note": "A small reminder that purring helps."
+    }
+  ],
+  "08-10": [
+    {
+      "name": "S'mores Day",
+      "note": "Graham, chocolate, marshmallow—fire required."
+    }
+  ],
+  "08-12": [
+    {
+      "name": "World Elephant Day",
+      "note": "Gentle giants need our help."
+    }
+  ],
+  "08-15": [
+    {
+      "name": "Relaxation Day",
+      "note": "Do absolutely nothing—doctor's orders."
+    }
+  ],
+  "08-16": [
+    {
+      "name": "National Roller Coaster Day",
+      "note": "Scream your heart out—safely."
+    }
+  ],
+  "08-19": [
+    {
+      "name": "World Photography Day",
+      "note": "Freeze time—one frame at a time."
+    }
+  ],
+  "08-26": [
+    {
+      "name": "Dog Day",
+      "note": "Our oldest friends deserve attention."
+    }
+  ],
+  "08-30": [
+    {
+      "name": "National Beach Day",
+      "note": "Sand, sun, and surf."
+    }
+  ],
+  "09-05": [
+    {
+      "name": "Cheese Pizza Day",
+      "note": "Simple, classic, perfect."
+    }
+  ],
+  "09-08": [
+    {
+      "name": "International Literacy Day",
+      "note": "Words empower—spread the ability."
+    }
+  ],
+  "09-16": [
+    {
+      "name": "Collect Rocks Day",
+      "note": "Earth's souvenirs are free."
     }
   ],
   "09-19": [
     {
       "name": "Talk Like a Pirate Day",
-      "note": "Ahoy matey! Speak like a buccaneer"
+      "note": "Ahoy, ye scallywags!"
+    }
+  ],
+  "09-22": [
+    {
+      "name": "Hobbit Day",
+      "note": "Bilbo and Frodo's shared birthday."
+    }
+  ],
+  "09-23": [
+    {
+      "name": "First Day of Fall",
+      "note": "Pumpkin spice season begins."
+    }
+  ],
+  "09-25": [
+    {
+      "name": "World Comic Book Day",
+      "note": "Panels, capes, and graphic storytelling."
     }
   ],
   "10-01": [
     {
       "name": "World Coffee Day",
-      "note": "Celebrating the beloved beverage that fuels mornings"
+      "note": "The beloved bean that fuels mornings."
+    }
+  ],
+  "10-04": [
+    {
+      "name": "World Animal Day",
+      "note": "Every creature matters."
+    }
+  ],
+  "10-12": [
+    {
+      "name": "Old Farmer's Day",
+      "note": "Wisdom from the land."
+    }
+  ],
+  "10-15": [
+    {
+      "name": "I Love Lucy Day",
+      "note": "Vitameatavegamin—wait, wrong product."
+    }
+  ],
+  "10-16": [
+    {
+      "name": "Dictionary Day",
+      "note": "Words—defined and connected."
+    }
+  ],
+  "10-21": [
+    {
+      "name": "Apple Day",
+      "note": "Fall's finest fruit."
+    }
+  ],
+  "10-23": [
+    {
+      "name": "Mole Day",
+      "note": "Avogadro's number—6.02 × 10²³."
     }
   ],
   "10-25": [
     {
       "name": "World Pasta Day",
-      "note": "Honor the versatile Italian staple"
+      "note": "Honor the versatile Italian staple."
+    }
+  ],
+  "10-31": [
+    {
+      "name": "Halloween",
+      "note": "Spooky season—embrace the fright."
     }
   ],
   "11-02": [
     {
       "name": "Look for Circles Day",
-      "note": "Find circular shapes all around you"
+      "note": "Find the round things around you."
+    }
+  ],
+  "11-03": [
+    {
+      "name": "Sandwich Day",
+      "note": "Layers of delicious—stacked high."
+    }
+  ],
+  "11-08": [
+    {
+      "name": "STEM Day",
+      "note": "Science, tech, engineering, math—build the future."
+    }
+  ],
+  "11-10": [
+    {
+      "name": "Sesame Street Day",
+      "note": "Big Bird and friends teach us still."
     }
   ],
   "11-13": [
     {
       "name": "World Kindness Day",
-      "note": "Spread kindness and compassion"
+      "note": "Spread some sunshine on purpose."
+    }
+  ],
+  "11-15": [
+    {
+      "name": "Clean Out Your Refrigerator Day",
+      "note": "Expired yogurt beware."
+    }
+  ],
+  "11-17": [
+    {
+      "name": "Homemade Bread Day",
+      "note": "Knead, rise, bake—aroma heaven."
+    }
+  ],
+  "11-19": [
+    {
+      "name": "International Men's Day",
+      "note": "Celebrate the men in your life."
+    }
+  ],
+  "11-23": [
+    {
+      "name": "Fibonacci Day",
+      "note": "1, 1, 2, 3, 5, 8—nature's pattern."
+    }
+  ],
+  "11-26": [
+    {
+      "name": "Cake Day",
+      "note": "Celebrate with frosting."
+    }
+  ],
+  "11-28": [
+    {
+      "name": "Red Planet Day",
+      "note": "Mars is watching—reach higher."
+    }
+  ],
+  "12-04": [
+    {
+      "name": "Wear Brown Shoes Day",
+      "note": "Ground yourself in earth tones."
+    }
+  ],
+  "12-05": [
+    {
+      "name": "Day of the Ninja",
+      "note": "Stealth, shadow, mystery."
+    }
+  ],
+  "12-07": [
+    {
+      "name": "Letter Writing Day",
+      "note": "Write to someone who matters."
+    }
+  ],
+  "12-08": [
+    {
+      "name": "Christmas Card Day",
+      "note": "Season's greetings on paper."
+    }
+  ],
+  "12-11": [
+    {
+      "name": "Mountains Day",
+      "note": "Peaks that challenge and inspire."
+    }
+  ],
+  "12-12": [
+    {
+      "name": "Gingerbread House Day",
+      "note": "Edible architecture—delicious."
     }
   ],
   "12-14": [
     {
       "name": "Monkey Day",
-      "note": "Celebrating our primate relatives"
+      "note": "Our primate relatives—cheeky and smart."
+    }
+  ],
+  "12-21": [
+    {
+      "name": "Crossword Puzzle Day",
+      "note": "Grid blanks and wordplay."
+    }
+  ],
+  "12-23": [
+    {
+      "name": "Festivus",
+      "note": "Airing of grievances—for the rest of us."
+    }
+  ],
+  "12-25": [
+    {
+      "name": "Christmas",
+      "note": "Joy, family, and presents."
+    }
+  ],
+  "12-29": [
+    {
+      "name": "Tick Tock Day",
+      "note": "Time flies—make it count."
+    }
+  ],
+  "12-31": [
+    {
+      "name": "Make Up Your Mind Day",
+      "note": "Decide—finally."
     }
   ]
 }

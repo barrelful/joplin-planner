@@ -291,7 +291,7 @@ def test_full_update_flow(tmp_path: Path) -> None:
                 "Updated highlight",
                 "--config-dir",
                 str(config_dir),
-            ]
+            ],
         )
 
     assert [call.get_method() for call in calls] == ["GET", "PUT"]
@@ -316,7 +316,7 @@ def test_api_get_failure(tmp_path: Path) -> None:
                 "Hydrate=true",
                 "--config-dir",
                 str(config_dir),
-            ]
+            ],
         )
 
 
@@ -339,7 +339,7 @@ def test_api_put_failure(tmp_path: Path) -> None:
                 "Hydrate=true",
                 "--config-dir",
                 str(config_dir),
-            ]
+            ],
         )
 
 
@@ -355,7 +355,7 @@ def test_token_not_in_error_output(tmp_path: Path, capsys: pytest.CaptureFixture
                 "Hydrate=true",
                 "--config-dir",
                 str(config_dir),
-            ]
+            ],
         )
 
     assert "fake-secret-token" not in capsys.readouterr().err
@@ -378,7 +378,7 @@ def test_dry_run_prints_body_skips_put(tmp_path: Path, capsys: pytest.CaptureFix
                 "--config-dir",
                 str(config_dir),
                 "--dry-run",
-            ]
+            ],
         )
 
     assert urlopen_mock.call_count == 1
@@ -398,5 +398,5 @@ def test_dry_run_still_validates_get(tmp_path: Path) -> None:
                 "--config-dir",
                 str(config_dir),
                 "--dry-run",
-            ]
+            ],
         )

@@ -153,7 +153,7 @@ def generate_daily_planner(
             "* Done:",
             "* Still open:",
             "* First action tomorrow:",
-        ]
+        ],
     )
     return "\n".join(lines)
 

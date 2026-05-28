@@ -61,7 +61,7 @@ def load_joplin_credentials(config_dir: Path) -> tuple[str, str]:
     joplin_base_url: str | None = None
     joplin_token: str | None = None
 
-    with open(config_file, "r", encoding="utf-8") as f:
+    with open(config_file, encoding="utf-8") as f:
         for line in f:
             stripped = line.strip()
             # Skip comments and blank lines
@@ -183,7 +183,7 @@ def load_planner_state(config_dir: Path) -> dict[str, object]:
         sys.exit(1)
 
     try:
-        with open(state_file, "r", encoding="utf-8") as f:
+        with open(state_file, encoding="utf-8") as f:
             loaded = cast(object, json.load(f))
     except json.JSONDecodeError:
         print("Error: planner-state.json is not valid JSON.", file=sys.stderr)
@@ -222,7 +222,7 @@ def get_month_config(state: dict[str, object], month_key: str) -> dict[str, obje
 
     if not isinstance(month_config, dict):
         print(
-            f"Error: No configuration found for {month_key} in planner-state.json.", file=sys.stderr
+            f"Error: No configuration found for {month_key} in planner-state.json.", file=sys.stderr,
         )
         sys.exit(1)
     month_config_values = cast(dict[str, object], month_config)
@@ -282,7 +282,7 @@ def coerce_number(raw: str, field_name: str = "<unknown>") -> int:
 
 
 def validate_fields(
-    field_args: list[tuple[str, str]], schema: dict[str, str]
+    field_args: list[tuple[str, str]], schema: dict[str, str],
 ) -> dict[str, bool | int]:
     unknown_fields = [name for name, _raw_value in field_args if name not in schema]
 
@@ -398,7 +398,7 @@ def update_row_cells(
     for field_name, value in updates.items():
         if field_name not in column_indexes:
             print(
-                f"Error: Field '{field_name}' is not present in the tracker table.", file=sys.stderr
+                f"Error: Field '{field_name}' is not present in the tracker table.", file=sys.stderr,
             )
             sys.exit(1)
 

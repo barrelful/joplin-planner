@@ -113,7 +113,7 @@ def test_multiple_fun_dates() -> None:
             "03-14": [
                 {"name": "Pi Day", "note": "Celebrate π"},
                 {"name": "Pie Day", "note": "Eat pie"},
-            ]
+            ],
         },
         holidays_override={},
     )

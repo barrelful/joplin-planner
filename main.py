@@ -16,7 +16,7 @@ from week_planner import generate_weekly_planner  # pyright: ignore[reportMissin
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Joplin Planner Generator. Use 'monthly' or 'weekly' subcommands.",
+        description="Joplin Planner Generator. Use 'monthly', 'weekly', or 'daily' subcommands.",
     )
     subparsers = parser.add_subparsers(dest="planner_type", required=True)
 

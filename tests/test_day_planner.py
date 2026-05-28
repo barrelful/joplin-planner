@@ -329,3 +329,16 @@ def test_cli_existing_weekly_still_works(capsys: CaptureFixture[str]) -> None:
 
     captured = capsys.readouterr()
     assert "# 🗓️ Weekly Schedule" in captured.out
+
+
+def test_cli_holiday_region(capsys: CaptureFixture[str]) -> None:
+    with patch.object(
+        sys,
+        "argv",
+        ["main.py", "daily", "--date", "2026-12-25", "--holiday-region", "england-and-wales"],
+    ):
+        main()
+
+    captured = capsys.readouterr()
+    assert "## Holiday" in captured.out
+    assert "Christmas Day" in captured.out

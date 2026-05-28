@@ -1,6 +1,6 @@
 # 🗓️ Joplin Planner
 
-Generate Markdown-based planners for [Joplin](https://joplinapp.org/) to help you track habits, set goals, and plan your month or week. This tool outputs clean, checkbox-friendly tables ready to paste directly into your notes.
+Generate Markdown-based planners for [Joplin](https://joplinapp.org/) to help you track habits, set goals, and plan your month, week, or day. This tool outputs clean, checkbox-friendly tables ready to paste directly into your notes.
 
 ---
 
@@ -36,7 +36,7 @@ pre-commit install
 
 ## 🚀 Usage
 
-The CLI provides two subcommands: `monthly` and `weekly`. All output is printed to **stdout** — redirect to a file with `>` if needed.
+The CLI provides three subcommands: `monthly`, `weekly`, and `daily`. All output is printed to **stdout** — redirect to a file with `>` if needed.
 
 ### 📅 Monthly Planner
 
@@ -75,6 +75,40 @@ joplin-planner weekly --start 8 --end 22 --interval 2 --format 24h > week.md
 
 ---
 
+### 📋 Daily Planner
+
+Generate a structured daily planner with optional holiday and fun-date detection:
+
+```bash
+joplin-planner daily --date 2026-06-02 > daily.md
+```
+
+Or generate for today or tomorrow:
+
+```bash
+joplin-planner daily --today
+joplin-planner daily --tomorrow
+```
+
+#### Options:
+- `--date`: Specific date (YYYY-MM-DD)
+- `--today`: Generate for today
+- `--tomorrow`: Generate for tomorrow
+- `--fun-dates`: Path to custom fun dates JSON
+- `--holiday-region`: Region for holidays (default: england-and-wales)
+- `--no-holidays`: Skip holiday detection
+- `--no-fun-dates`: Skip fun dates
+
+#### Holidays
+
+Holidays are detected from a local cached copy of GOV.UK bank holidays for England and Wales. No internet is required. If holiday data is unavailable, the planner generates without the holiday section and prints a warning.
+
+#### Fun Dates
+
+Fun and commemorative dates come from a local curated JSON file (`src/data/fun_dates.json`). Each entry uses an MM-DD key (e.g., `03-14` for Pi Day) so dates repeat yearly. To add a new fun date, edit `src/data/fun_dates.json` and add an entry like: `{"name": "...", "note": "..."}`
+
+---
+
 ## 🛠 Development
 
 This project uses:
@@ -93,7 +127,7 @@ python main.py weekly --start 9 --end 18 --interval 1 --format 12h
 ## 🔮 Roadmap
 - [x] Monthly planner with habits
 - [x] Weekly planner with daily blocks
-- [ ] Daily page generator (journaling style)
+- [x] Daily page generator (journaling style)
 - [ ] GUI or web interface
 
 ---
@@ -144,6 +178,43 @@ Week brief summary and goal
 | 10:00 to 12:00 |  |  |  |  |  |  |  |
 | 12:00 to 14:00 |  |  |  |  |  |  |  |
 ...
+```
+
+### Daily Snippet
+```markdown
+# 📋 Daily Planner – Tuesday, 2 June 2026
+
+## Today's Date
+Tuesday, 2 June 2026
+
+## Fun Dates
+- World Sex Worker Day. Recognise the rights and contributions of sex workers worldwide.
+
+## Planning Note
+Focus on what matters most to you and do that one thing well.
+
+## Holiday
+- Spring Bank Holiday (England and Wales)
+
+## Main Objective
+One thing to accomplish today:
+
+## Top Priorities
+- [ ] Priority 1
+- [ ] Priority 2
+- [ ] Priority 3
+
+## Schedule
+| Time         | Task |
+| ------------ | ---- |
+| 08:00 - 10:00 |      |
+| 10:00 - 12:00 |      |
+| 12:00 - 14:00 |      |
+| 14:00 - 16:00 |      |
+| 16:00 - 18:00 |      |
+| 18:00 - 20:00 |      |
+
+## Notes
 ```
 
 Ready to paste into your Joplin note!
